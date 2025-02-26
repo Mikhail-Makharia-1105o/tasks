@@ -1,40 +1,45 @@
-import axios from 'axios';
-import env from 'dotenv'
+let tasks = [];
 
-let tasks = axios.get(`/tasks`)
-.then(response => {
-  return response.data.json()
-}).catch(error => {
-  console.log(error);
-  return [];
-})
+async function getTasks() {
+  const response = await fetch(`/tasks`)
+  const data = await response.json();
+  return data;
+}
 
-const getTasks = (type) => {
-  switch (type) {
-    case 'all':
-      return tasks;
-    case 'active':
-      return tasks.filter(t =>!t.completed);
-    case 'completed':
-      return tasks.filter(t => t.completed);
-    default:
-      return [];
+async function addTask(task) {
+  try {
+  const response = await fetch(`/tasks`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify( { key: 'value' } )
+    //{habit: task, id: Math.random(100) * +Date.now()}
+  });
+  const data = await response;
+  return data;
+  } catch (error) {
+    throw error;
   }
 }
 
-const addTask = (task) => {
-  tasks.push(task);
-};
+async function deleteTask(id) {
+  const response = await fetch(`/tasks/${id}`, {
+    method: 'DELETE',
+  });
+}
 
-const updateTask = (id, task) => {
-  const index = tasks.findIndex(t => t.id === id);
-  if (index !== -1) {
-    tasks[index] = { ...tasks[index], ...task };
-  }
-};
-
-const deleteTask = (id) => {
-  tasks = tasks.filter(t => t.id !== id);
-};
+async function updateTask(id, task) {
+  deleteTask(id)
+  const response = await fetch(`/tasks/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(task)
+  });
+  const data = await response.json();
+  return data;
+}
 
 export { getTasks, addTask, updateTask, deleteTask };
