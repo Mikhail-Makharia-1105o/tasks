@@ -1,1 +1,24 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="../styles/style.css">
+<script src="../scripts/script.js" type="module" defer></script>
+<title>Tasks</title>
+</head>
+<body>
+    <form class="task-input">
+        <input type="text" name="task-name" class="task-input.name" placeholder="Input task here">
+        <button type="submit" class="task-input.submit">Add Task</button>
+    </form>
+    <ul class="switch">
+        <button class="switch.all"></button>
+        <button class="switch.done"></button>
+        <button class="switch.active"></button>
+    </ul>
+    <ul class="task-list">
+        <ul class="task-list.all"></ul>
+        <ul class="task-list.active"></ul>
+        <ul class="task-list.done"></ul>
+    </ul>
+</body>
+</html>
