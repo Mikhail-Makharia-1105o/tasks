@@ -1,4 +1,13 @@
-let tasks = [];
+import axios from 'axios';
+import env from 'dotenv'
+
+let tasks = axios.get(`/tasks`)
+.then(response => {
+  return response.data.json()
+}).catch(error => {
+  console.log(error);
+  return [];
+})
 
 const getTasks = (type) => {
   switch (type) {
